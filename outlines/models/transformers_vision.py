@@ -1,3 +1,4 @@
+import torch
 from typing import TYPE_CHECKING, Any, Iterator, List, Optional, Union
 
 from outlines.generate.api import GenerationParameters, SamplingParameters
@@ -45,7 +46,7 @@ class TransformersVision(Transformers):
         """
         inputs = self.processor(
             text=prompts, images=media, padding=True, return_tensors="pt"
-        ).to(self.model.device)
+        ).to(self.model.device, dtype = torch.bfloat16)
 
         generation_kwargs = self._get_generation_kwargs(
             prompts,
